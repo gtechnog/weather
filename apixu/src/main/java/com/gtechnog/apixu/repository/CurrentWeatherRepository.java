@@ -11,11 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CurrentWeatherRepository {
 
     private static CurrentWeatherRepository sInstance;
-    private final Retrofit retrofit;
     private final CurrentWeatherApi currentWeatherApi;
 
     private CurrentWeatherRepository() {
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -34,12 +33,13 @@ public class CurrentWeatherRepository {
     }
 
     public void getCurrentWeatherByLocation(double lat, double lon) {
-        String query = String.valueOf(lat) + "," + String.valueOf(lon);
+        String query = lat + "," + lon;
         Call<CurrentWeather> call = currentWeatherApi.currentWeather(Constants.API_KEY, query);
         call.enqueue(new Callback<CurrentWeather>() {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
-
+                int i = 2; int j = 3;
+                int k = i + j;
             }
 
             @Override
