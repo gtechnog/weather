@@ -20,4 +20,20 @@ public class Location {
 
     @SerializedName("tz_id")
     private String tzId;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getTzId() {
+        return tzId;
+    }
 }

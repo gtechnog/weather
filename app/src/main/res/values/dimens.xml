@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="progress_bar_size">96dp</dimen>
+
+    <dimen name="font_size_tempreature">96sp</dimen>
+    <dimen name="font_size_city">36sp</dimen>
+
+    <dimen name="margin_top_tempreature_text">56dp</dimen>
+    <dimen name="height_item_forecast">80dp</dimen>
+    <dimen name="font_size_day">16sp</dimen>
+</resources>

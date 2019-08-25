@@ -19,4 +19,7 @@ public class ForecastWeather {
     @SerializedName("alert")
     private Alert alert;
 
+    public Forecast getForecast() {
+        return forecast;
+    }
 }

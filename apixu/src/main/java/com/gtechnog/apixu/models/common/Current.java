@@ -13,4 +13,7 @@ public class Current {
     @SerializedName("temp_f")
     private double tempInFahrenheit;
 
+    public double getTempInCelsius() {
+        return tempInCelsius;
+    }
 }

@@ -1,11 +1,37 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@color/app_background</item>
+    </style>
+
+    <style name="LoadingProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/progress_bar</item>
+    </style>
+
+    <style name="TempreatureTextViewStyle">
+        <item name="android:textSize">@dimen/font_size_tempreature</item>
+        <item name="android:fontFamily">"sans-serif-black"</item>
+        <item name="android:lineSpacingExtra">1.2sp</item>
+    </style>>
+
+    <style name="CityTextViewStyle">
+        <item name="android:textSize">@dimen/font_size_city</item>
+        <item name="android:fontFamily">"sans-serif-thin"</item>
+        <item name="android:lineSpacingExtra">1.4sp</item>
+    </style>>
+
+    <style name="ItemForecastTextViewStyle">
+        <item name="android:textSize">@dimen/font_size_day</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingExtra">1.2sp</item>
     </style>
 
 </resources>

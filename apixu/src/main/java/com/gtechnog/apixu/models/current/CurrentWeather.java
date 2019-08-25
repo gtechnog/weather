@@ -11,4 +11,12 @@ public class CurrentWeather {
 
     @SerializedName("current")
     private Current current;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public Current getCurrent() {
+        return current;
+    }
 }

@@ -32,19 +32,22 @@ public class CurrentWeatherRepository {
         return sInstance;
     }
 
-    public void getCurrentWeatherByLocation(double lat, double lon) {
+    public void getCurrentWeatherByLocation(double lat, double lon, final OnNetworkResponse<CurrentWeather> onNetworkResponse) {
         String query = lat + "," + lon;
         Call<CurrentWeather> call = currentWeatherApi.currentWeather(Constants.API_KEY, query);
         call.enqueue(new Callback<CurrentWeather>() {
             @Override
             public void onResponse(Call<CurrentWeather> call, Response<CurrentWeather> response) {
-                int i = 2; int j = 3;
-                int k = i + j;
+                if (onNetworkResponse != null) {
+                    onNetworkResponse.onSuccess(response.body());
+                }
             }
 
             @Override
             public void onFailure(Call<CurrentWeather> call, Throwable t) {
-
+                if (onNetworkResponse != null) {
+                    onNetworkResponse.onFailure();
+                }
             }
         });
     }
