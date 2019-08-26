@@ -9,7 +9,7 @@
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:background">@color/app_background</item>
+        <item name="android:windowBackground">@color/app_background</item>
     </style>
 
     <style name="LoadingProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
@@ -32,6 +32,11 @@
         <item name="android:textSize">@dimen/font_size_day</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:lineSpacingExtra">1.2sp</item>
+    </style>
+
+    <style name="RetryMessageTextViewStyle">
+        <item name="android:textSize">@dimen/font_size_retry_text</item>
+        <item name="android:fontFamily">"sans-serif-thin"</item>
     </style>
 
 </resources>

@@ -14,6 +14,9 @@ import com.gtechnog.apixu.repository.ForecastRepository;
 import com.gtechnog.apixu.repository.OnNetworkResponse;
 import com.gtechnog.weather.constants.Constants;
 
+/**
+ * ViewModel tied to {@link com.gtechnog.weather.ForecastFragment}
+ */
 public class ForecastViewModel extends AndroidViewModel {
 
     private static final String TAG = ForecastViewModel.class.getSimpleName();
@@ -31,7 +34,7 @@ public class ForecastViewModel extends AndroidViewModel {
      *
      * @param location location of which we need the forecast
      */
-    public void getForecast(Location location) {
+    public void getForecastDetails(Location location) {
         if (location != null) {
             forecastRepository.getForecastByDays(location.getLatitude(), location.getLongitude(), Constants.FORECAST_DAYS,
                     new OnNetworkResponse<ForecastWeather>() {
@@ -50,6 +53,10 @@ public class ForecastViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * @return return {@link MutableLiveData} of {@link Forecast} and
+     * View should observe this to get forecast updates
+     */
     public MutableLiveData<Forecast> getForecast() {
         return forecast;
     }

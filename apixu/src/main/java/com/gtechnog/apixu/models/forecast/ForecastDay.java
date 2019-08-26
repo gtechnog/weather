@@ -12,4 +12,16 @@ public class ForecastDay {
 
     @SerializedName("astro")
     private Astro astro;
+
+    public Day getDay() {
+        return day;
+    }
+
+    public long getDateEpoch() {
+        return dateEpoch;
+    }
+
+    public Astro getAstro() {
+        return astro;
+    }
 }

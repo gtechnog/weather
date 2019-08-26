@@ -14,8 +14,11 @@ import com.gtechnog.apixu.repository.OnNetworkResponse;
 import com.gtechnog.weather.network.GoogleLocationApi;
 import com.gtechnog.weather.utils.PermissionUtils;
 
+/**
+ *  ViewModel tied to {@link com.gtechnog.weather.CurrentWeatherActivity} and responsible for
+ *  getting data for the UI
+ */
 public class CurrentWeatherViewModel extends AndroidViewModel {
-
 
     private static final String TAG = CurrentWeatherViewModel.class.getSimpleName();
     public static final int STATE_INITIAL = 0;
@@ -31,8 +34,6 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> shouldRequestForPermission = new MutableLiveData<>();
 
     private CurrentWeather currentWeather;
-
-    private final GoogleLocationApi.ResponseListener responseListener;
     private Location currentLocation;
 
     CurrentWeatherViewModel(@NonNull Application application,
@@ -44,7 +45,6 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
         this.currentWeatherRepository = currentWeatherRepository;
         getState().postValue(STATE_INITIAL);
 
-        responseListener = getGoogleApiResponseListener();
         if (!PermissionUtils.isLocationPermissionGranted(application)) {
             shouldRequestForPermission.postValue(true);
         } else {
@@ -52,10 +52,17 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     *  call this method to get the user location and start fetching the
+     *  temperature for this location.
+     *  If location permission is not granted this will update the mutable data and UI must
+     *  observe that and ask user for permission
+     *  // TODO TASK: Locatoin provider enable/disable permission is not handled
+     */
     public void getUserLocation() {
         getState().postValue(STATE_LOADING);
         try {
-            googleApi.fetchLocation(responseListener);
+            googleApi.fetchLocation(getGoogleApiResponseListener());
         } catch (GoogleLocationApi.LocationPermissionDenied locationPermissionDenied) {
             // TODO: Handle location permission
             shouldRequestForPermission.postValue(true);
@@ -64,21 +71,33 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
         }
     }
 
+
+    /**
+     *  Retry of fetching location
+     */
+    public void retryAndFetchAgain() {
+        getUserLocation();
+    }
+
     private GoogleLocationApi.ResponseListener getGoogleApiResponseListener() {
         return new GoogleLocationApi.ResponseListener() {
             @Override
             public void onLocationUpdate(Location location) {
+                disconnectGoogleApi();
+                if (location == null) {
+                    getState().postValue(STATE_ERROR);
+                    return;
+                }
                 Log.d(TAG, "onLocationUpdate: " + " Lattitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
                 currentLocation = location;
                 getCurrentWeatherByLocation(location);
-                googleApi.disconnect();
             }
 
             @Override
             public void onError() {
                 Log.e(TAG, "onError: error in getting user location" );
                 getState().postValue(STATE_ERROR);
-                googleApi.disconnect();
+                disconnectGoogleApi();
             }
         };
     }
@@ -89,7 +108,7 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
                 new OnNetworkResponse<CurrentWeather>() {
                     @Override
                     public void onSuccess(CurrentWeather weather) {
-                        Log.d(TAG, "onSuccess: current weather received successfully");
+                        Log.d(TAG, "onSuccess() called with: weather = [" + weather.getCurrent().getTempInCelsius() + "]");
                         currentWeather = weather;
                         getState().postValue(STATE_SHOW_TEMP);
                     }
@@ -102,19 +121,41 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
                 });
     }
 
+    /**
+     *  Disconnect google API
+     */
+    public void disconnectGoogleApi() {
+        googleApi.disconnect();
+    }
 
+    /**
+     * @return MutableLiveData of screen state, UI must observe this value
+     * and update UI accordingly
+     */
     public MutableLiveData<Integer> getState() {
         return state;
     }
 
+    /**
+     * @return {@link CurrentWeather}
+     */
     public CurrentWeather getCurrentWeather() {
         return currentWeather;
     }
 
+
+    /**
+     * @return MutableLiveData of location permission for app, UI must observe this value
+     * and ask user for location permission
+     */
     public MutableLiveData<Boolean> getShouldRequestForPermission() {
         return shouldRequestForPermission;
     }
 
+
+    /**
+     * @return {@link Location}
+     */
     public Location getCurrentLocation() {
         return currentLocation;
     }

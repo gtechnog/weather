@@ -9,4 +9,7 @@ public class Forecast {
     @SerializedName("forecastday")
     private ArrayList<ForecastDay> forecastDay;
 
+    public ArrayList<ForecastDay> getForecastDay() {
+        return forecastDay;
+    }
 }

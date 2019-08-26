@@ -22,4 +22,27 @@ public class Day {
     @SerializedName("avgtemp_f")
     private double averageTempInFarhenhite;
 
+    public double getAverageTempInCelcius() {
+        return averageTempInCelcius;
+    }
+
+    public double getMaxTempInCelcius() {
+        return maxTempInCelcius;
+    }
+
+    public double getMaxTempInFarhenhite() {
+        return maxTempInFarhenhite;
+    }
+
+    public double getMinTempInCelcius() {
+        return minTempInCelcius;
+    }
+
+    public double getMinTempInFarhenhite() {
+        return minTempInFarhenhite;
+    }
+
+    public double getAverageTempInFarhenhite() {
+        return averageTempInFarhenhite;
+    }
 }

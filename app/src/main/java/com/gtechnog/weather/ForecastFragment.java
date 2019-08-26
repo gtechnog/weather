@@ -8,14 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gtechnog.apixu.models.forecast.Forecast;
 import com.gtechnog.weather.adapters.ForecastAdapter;
 import com.gtechnog.weather.utils.InjectorUtils;
-import com.gtechnog.weather.utils.TextUtils;
 import com.gtechnog.weather.viewmodel.CurrentWeatherViewModel;
 import com.gtechnog.weather.viewmodel.ForecastViewModel;
 
@@ -23,6 +24,7 @@ public class ForecastFragment extends Fragment {
 
     private ForecastViewModel viewModel;
     private CurrentWeatherViewModel sharedViewModel;
+    private RecyclerView recyclerView;
 
     public ForecastFragment() {
     }
@@ -34,7 +36,7 @@ public class ForecastFragment extends Fragment {
                 InjectorUtils.createForecastViewModelFactory(getActivity().getApplication())).
                 get(ForecastViewModel.class);
         sharedViewModel = ViewModelProviders.of(getActivity()).get(CurrentWeatherViewModel.class);
-        viewModel.getForecast(sharedViewModel.getCurrentLocation());
+        viewModel.getForecastDetails(sharedViewModel.getCurrentLocation());
     }
 
     static ForecastFragment newInstance() {
@@ -46,10 +48,22 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forecast, container, false);
         if (view instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-            recyclerView.setAdapter(new ForecastAdapter());
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+            subscribeUI();
         }
         return view;
+    }
+
+    private void subscribeUI() {
+        viewModel.getForecast().observe(this, new Observer<Forecast>() {
+            @Override
+            public void onChanged(Forecast forecast) {
+                if (forecast != null) {
+                    recyclerView.setAdapter(new ForecastAdapter(forecast.getForecastDay()));
+                }
+            }
+        });
     }
 }

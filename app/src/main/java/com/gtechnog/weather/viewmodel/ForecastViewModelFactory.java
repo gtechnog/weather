@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gtechnog.apixu.repository.ForecastRepository;
 
+/**
+ * Factory class for creating {@link ForecastViewModel}
+ */
 public class ForecastViewModelFactory extends ViewModelProvider.AndroidViewModelFactory {
 
     private final ForecastRepository forecastRepository;
@@ -15,8 +18,8 @@ public class ForecastViewModelFactory extends ViewModelProvider.AndroidViewModel
 
     /**
      * Creates a {@code AndroidViewModelFactory}
-     *
-     * @param application an application to pass in {@link AndroidViewModel}
+     * @param forecastRepository forecast repository
+     * @param application an application to pass in {@link androidx.lifecycle.AndroidViewModel}
      */
 
     public ForecastViewModelFactory(Application application, ForecastRepository forecastRepository) {

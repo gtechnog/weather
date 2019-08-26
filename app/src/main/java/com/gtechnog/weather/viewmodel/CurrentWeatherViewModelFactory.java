@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.gtechnog.apixu.repository.CurrentWeatherRepository;
 import com.gtechnog.weather.network.GoogleLocationApi;
 
+/**
+ * Factory class for creating {@link CurrentWeatherViewModel}
+ */
 public class CurrentWeatherViewModelFactory extends ViewModelProvider.AndroidViewModelFactory {
 
     private final Application application;
@@ -18,9 +21,9 @@ public class CurrentWeatherViewModelFactory extends ViewModelProvider.AndroidVie
     /**
      * Creates a {@code AndroidViewModelFactory}
      *
-     * @param application an application to pass in {@link AndroidViewModel}
-     * @param currentWeatherRepository
-     * @param googleApiRepository
+     * @param application an application to pass in {@link androidx.lifecycle.AndroidViewModel}
+     * @param currentWeatherRepository current weather repository
+     * @param googleApiRepository googleapi repository
      */
     public CurrentWeatherViewModelFactory(@NonNull Application application,
                                           @NonNull CurrentWeatherRepository currentWeatherRepository,

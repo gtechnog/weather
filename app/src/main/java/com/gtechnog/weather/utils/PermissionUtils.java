@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 
 import androidx.core.content.ContextCompat;
 
+/**
+ * Permission check utility class
+ */
 public class PermissionUtils {
 
     public static boolean isLocationPermissionGranted(Context context) {

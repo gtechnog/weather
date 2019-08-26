@@ -5,8 +5,11 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="app_background">#F5F6F7</color>
+    <color name="retry_background">#E85959</color>
 
     <color name="text_color_tempreature">#2A2A2A</color>
     <color name="text_color_city">#556799</color>
     <color name="text_color_item_forecast">#2A2A2A</color>
+
+    <color name="color_button_retry">#4A4A4A</color>
 </resources>
